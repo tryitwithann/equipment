@@ -1,30 +1,30 @@
-type MessageName = string
+export type MessageName = string
 
-type MessagePayloadStructure = Readonly<Record<string, string>>
+export type MessagePayloadStructure = Readonly<Record<string, string>>
 
-type RecordedAt = "Recorded-At";
+export type RecordedAt = "Recorded-At";
 
-type MessageId = "Message-Id";
-type CausationId = "Causation-Id";
-type CorrelationId = "Correlation-Id";
+export type MessageId = "Message-Id";
+export type CausationId = "Causation-Id";
+export type CorrelationId = "Correlation-Id";
 
-type Authentication = "Authentication";
-type Authorization = "Authorization";
+export type Authentication = "Authentication";
+export type Authorization = "Authorization";
 
-type HostSystemInformation = "Host-System-Information";
-type ClientSystemInformation = "Client-System-Information";
+export type HostSystemInformation = "Host-System-Information";
+export type ClientSystemInformation = "Client-System-Information";
 
-type TenantId = "Tenant-Id";
+export type TenantId = "Tenant-Id";
 
-type StreamId = "Stream-Id";
-type StreamSequenceNumber = "Stream-Sequence-Number";
-type CommitId = "Commit-Id";
+export type StreamId = "Stream-Id";
+export type StreamSequenceNumber = "Stream-Sequence-Number";
+export type CommitId = "Commit-Id";
 
-type FeatureMetadataKey<FeatureMetadataKey extends string> = `Feature-${FeatureMetadataKey}`
+export type FeatureMetadataKey<FeatureMetadataKey extends string> = `Feature-${FeatureMetadataKey}`
 
-type CustomMetadataKey<CustomMetadataKey extends string> = `X-${CustomMetadataKey}`
+export type CustomMetadataKey<CustomMetadataKey extends string> = `X-${CustomMetadataKey}`
 
-type AnyMetadataKey
+export type AnyMetadataKey
     = RecordedAt
     | MessageId
     | CausationId
@@ -40,39 +40,39 @@ type AnyMetadataKey
     | FeatureMetadataKey<string>
     | CustomMetadataKey<string>
 
-type NativeMetadataKeys = MessageId;
+export type NativeMetadataKeys = MessageId;
 
-type MessageMetadataStructure<
+export type MessageMetadataStructure<
     MandatoryMetadataKeys extends AnyMetadataKey = NativeMetadataKeys,
     OptionalMetadataKeys extends AnyMetadataKey = AnyMetadataKey
 > = Partial<Readonly<Record<OptionalMetadataKeys, string>>>
   & Readonly<Record<MandatoryMetadataKeys, string>>
 
-type NativeDomainEventKeys = NativeMetadataKeys | CorrelationId | CausationId
-type NativeAnswerKeys = NativeMetadataKeys | CorrelationId | CausationId
-type NativeDomainEventMetadata = MessageMetadataStructure<NativeDomainEventKeys>
-type NativeAnswerMetadata = MessageMetadataStructure<NativeAnswerKeys>
+export type NativeDomainEventKeys = NativeMetadataKeys | CorrelationId | CausationId
+export type NativeAnswerKeys = NativeMetadataKeys | CorrelationId | CausationId
+export type NativeDomainEventMetadata = MessageMetadataStructure<NativeDomainEventKeys>
+export type NativeAnswerMetadata = MessageMetadataStructure<NativeAnswerKeys>
 
-const DomainEventMessageType = 'DomainEvent';
-const CommandMessageType = 'Command';
-const DomainQueryMessageType = 'DomainQuery';
-const AnswerMessageType = 'Answer';
+export const DomainEventMessageType = 'DomainEvent';
+export const CommandMessageType = 'Command';
+export const DomainQueryMessageType = 'DomainQuery';
+export const AnswerMessageType = 'Answer';
 
-type DomainEventType = typeof DomainEventMessageType;
-type CommandType = typeof CommandMessageType;
-type DomainQueryType = typeof DomainQueryMessageType;
-type AnswerType = typeof AnswerMessageType;
+export type DomainEventType = typeof DomainEventMessageType;
+export type CommandType = typeof CommandMessageType;
+export type DomainQueryType = typeof DomainQueryMessageType;
+export type AnswerType = typeof AnswerMessageType;
 
-const MessageTypes = [
+export const MessageTypes = [
     DomainEventMessageType,
     CommandMessageType,
     DomainQueryMessageType,
     AnswerMessageType,
 ] as const;
 
-type AllMessageTypes = typeof MessageTypes[number]
+export type AllMessageTypes = typeof MessageTypes[number]
 
-type Message<
+export type Message<
     MessageType extends AllMessageTypes = AllMessageTypes,
     MessagePayload extends MessagePayloadStructure = MessagePayloadStructure,
     Metadata extends MessageMetadataStructure = MessageMetadataStructure,
@@ -84,25 +84,25 @@ type Message<
     type: MessageType
 }
 
-type DomainEvent<
+export type DomainEvent<
     Name extends string = MessageName,
     MessagePayload extends MessagePayloadStructure = MessagePayloadStructure,
     Metadata extends MessageMetadataStructure = NativeDomainEventMetadata,
 > = Message<DomainEventType, MessagePayload, Metadata, Name>
 
-type Command<
+export type Command<
     Name extends string = MessageName,
     MessagePayload extends MessagePayloadStructure = MessagePayloadStructure,
     Metadata extends MessageMetadataStructure = MessageMetadataStructure,
 > = Message<CommandType, MessagePayload, Metadata, Name>
 
-type DomainQuery<
+export type DomainQuery<
     Name extends string = MessageName,
     MessagePayload extends MessagePayloadStructure = MessagePayloadStructure,
     Metadata extends MessageMetadataStructure = MessageMetadataStructure,
 > = Message<DomainQueryType, MessagePayload, Metadata, Name>
 
-type Answer<
+export type Answer<
     Name extends string = MessageName,
     MessagePayload extends MessagePayloadStructure = MessagePayloadStructure,
     Metadata extends MessageMetadataStructure = NativeAnswerMetadata,
